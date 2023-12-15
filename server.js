@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs/promises');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,7 +29,21 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 // Ruta para servir archivos subidos
-app.use('/uploads', express.static('uploads'));
+app.get('/uploads/:file', async (req, res) => {
+    const file = req.params.file;
+    const filePath = path.join(__dirname, 'uploads', file);
+
+    try {
+        // Verificar si el archivo existe
+        await fs.access(filePath);
+
+        // Si el archivo existe, servirlo
+        res.sendFile(filePath);
+    } catch (error) {
+        // Si el archivo no existe, enviar una respuesta 404
+        res.status(404).send('Archivo no encontrado');
+    }
+});
 
 // Iniciar el servidor
 app.listen(port, () => {

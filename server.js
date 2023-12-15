@@ -21,14 +21,14 @@ app.use(express.static('public'));
 // Ruta para manejar la carga de archivos
 app.post('/upload', upload.single('file'), (req, res) => {
     const fileName = req.file.filename;
-    const downloadUrl = `/upload/${fileName}`;
+    const downloadUrl = `/uploads/${fileName}`;
 
     // Redirigir a la URL del archivo cargado
     res.redirect(downloadUrl);
 });
 
 // Ruta para servir archivos subidos
-app.use('/upload', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 // Iniciar el servidor
 app.listen(port, () => {

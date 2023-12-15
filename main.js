@@ -4,7 +4,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
     const formData = new FormData(this);
 
     try {
-        const response = await fetch('/uploads', {
+        const response = await fetch('/upload', {
             method: 'POST',
             body: formData,
         });

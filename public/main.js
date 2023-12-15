@@ -9,10 +9,11 @@ document.getElementById('uploadForm').addEventListener('submit', async function 
             body: formData,
         });
 
-        // Si la respuesta es una redirección, actualizar la página con la nueva URL
-        if (response.redirected) {
-            const downloadUrl = response.url;
+        if (response.ok) {
+            // La carga fue exitosa
             const downloadLink = document.getElementById('downloadLink');
+            const fileName = await response.text();
+            const downloadUrl = `/uploads/${fileName}`;
             downloadLink.innerHTML = `<p>URL de descarga: <a href="${downloadUrl}" target="_blank">${downloadUrl}</a></p>`;
         } else {
             console.error('Error al subir el archivo:', response.statusText);

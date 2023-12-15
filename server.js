@@ -25,7 +25,8 @@ app.post('/upload', upload.single('file'), (req, res) => {
     const fileName = req.file.filename;
     const downloadUrl = `${req.protocol}://${req.get('host')}/upload/${fileName}`;
 
-    res.json({ downloadUrl });
+    // Redirigir a la URL del archivo cargado
+    res.redirect(downloadUrl);
 });
 
 // Ruta para servir archivos subidos
